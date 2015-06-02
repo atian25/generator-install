@@ -1,4 +1,4 @@
-generator-remote-installer
+generator-install
 ===============
 
 A generator to install remote generator
@@ -8,16 +8,16 @@ A generator to install remote generator
 ### Usage
 
 ```
-  npm install -g generator-remote-installer
-  yo remote-installer 
-  yo remote-installer [pkg]
-  yo remote-installer --tmpDir=./ --cfg=path/to/file
+  npm install -g generator-install
+  yo install 
+  yo install [pkg]
+  yo install --tmpDir=./ --cfg=path/to/file
 ```
 
 ### Programmatic usage
 
 ```
-  var generator = require('generator-remote-installer');
+  var generator = require('generator-install');
   generator.run(options);
 ```
 
@@ -25,7 +25,7 @@ A generator to install remote generator
 
 support first argument to be `pkg`, skip prompting
 
-`yo remote-installer generator-ngfis` is alias as `yo remote-installer --pkg=generator-ngfis`
+`yo install generator-ngfis` is alias as `yo install --pkg=generator-ngfis`
 
 ### Options
 

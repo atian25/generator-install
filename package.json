@@ -1,13 +1,13 @@
 {
-  "name": "generator-remote-installer",
-  "version": "0.1.1",
+  "name": "generator-install",
+  "version": "0.2.0",
   "description": "A generator to install remote generator",
   "repository": {
     "type": "git",
-    "url": "https://github.com/atian25/generator-remote-installer.git"
+    "url": "https://github.com/atian25/generator-install.git"
   },
   "bugs": {
-    "url": "https://github.com/atian25/generator-remote-installer/issues"
+    "url": "https://github.com/atian25/generator-install/issues"
   },
   "main": "app/index.js",
   "keywords": [

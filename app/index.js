@@ -9,7 +9,7 @@ var npmi = require('npmi');
 module.exports = yeoman.generators.Base.extend({
   constructor: function (args, options) {
     //cfg support object / json string / remote url / local url
-    options['cfg'] = options['cfg'] || 'https://raw.githubusercontent.com/atian25/generator-remote-installer/master/config.json';
+    options['cfg'] = options['cfg'] || 'https://raw.githubusercontent.com/atian25/generator-install/master/config.json';
 
     //support first argument to be package, skip prompting
     options['pkg'] = options['pkg'] || args[0];
