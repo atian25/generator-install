@@ -12,8 +12,8 @@ module.exports = yeoman.generators.Base.extend({
     options['cfg'] = options['cfg'] || 'https://raw.githubusercontent.com/atian25/generator-remote-installer/master/config.json';
 
     //support first argument to be package, skip prompting
-    options['package'] = options['package'] || args[0];
-    options['name'] = options['name'] || options['package'];
+    options['pkg'] = options['pkg'] || args[0];
+    options['name'] = options['name'] || options['pkg'];
 
     //where to npm install generator
     options['tmpDir'] = normalize(options['tmpDir'] || require('os').tmpDir());
@@ -40,7 +40,7 @@ module.exports = yeoman.generators.Base.extend({
 
   prompting: {
     generator: function () {
-      if (!this.options.package) {
+      if (!this.options.pkg) {
         var self = this;
         var done = this.async();
         //format user question
@@ -66,7 +66,7 @@ module.exports = yeoman.generators.Base.extend({
           var target = results['generator'];
           //self.options.generator = target;
           self.options.name = target.name;
-          self.options.package = target.package || target.name;
+          self.options.pkg = target.pkg || target.name;
           done();
         });
       }
@@ -79,10 +79,10 @@ module.exports = yeoman.generators.Base.extend({
       var self = this;
       var done = this.async();
       var options = self.options;
-      self.log('%s npm install %s to %s ...', chalk.bold.yellow('>'), options.package, options.tmpDir);
+      self.log('%s npm install %s to %s ...', chalk.bold.yellow('>'), options.pkg, options.tmpDir);
       //npm install
       npmi({
-        name: options.package,
+        name: options.pkg,
         path: options.tmpDir,
         forceInstall: options.clean
       }, function (err, result) {
@@ -96,7 +96,7 @@ module.exports = yeoman.generators.Base.extend({
           }
           done(err);
         } else {
-          //last item is install package info
+          //last item is install pkg info
           if (Array.isArray(result) && result.length > 0) {
             options.installPath = path.join(process.cwd(), result[result.length - 1][1]);
           } else {
