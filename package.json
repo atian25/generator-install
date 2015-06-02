@@ -1,0 +1,28 @@
+{
+  "name": "generator-remote-installer",
+  "version": "0.1.0",
+  "description": "A generator to install remote generator",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/atian25/generator-remote-installer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/atian25/generator-remote-installer/issues"
+  },
+  "main": "app/index.js",
+  "keywords": [
+    "scaffold",
+    "generator",
+    "remote-installer"
+  ],
+  "author": [
+    "TZ <atian25@qq.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^1.0.0",
+    "npmi": "^1.0.1",
+    "request": "^2.57.0",
+    "yeoman-generator": "^0.20.1"
+  }
+}
