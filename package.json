@@ -13,6 +13,9 @@
   "keywords": [
     "scaffold",
     "generator",
+    "boilerplate",
+    "init",
+    "yeoman-generator",
     "remote-installer"
   ],
   "author": [

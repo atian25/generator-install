@@ -1,5 +1,9 @@
 [
   {
+    "name": "generator-generator",
+    "description": "Generate a Yeoman generator",
+    "website": "https://github.com/yeoman/generator-generator"
+  }, {
     "name": "generator-ngfis",
     "description": "ngfis generator",
     "author": "TZ <atian25@qq.com>",
