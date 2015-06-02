@@ -3,6 +3,8 @@ generator-remote-installer
 
 A generator to install remote generator
 
+![snapshot.png](snapshot.png)
+
 ### Usage
 
 ```

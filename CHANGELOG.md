@@ -1,7 +1,7 @@
 0.1.1 / 2015-06-01
 ------------------
 
-- arg change `package` to `pkg`
+- args change `package` to `pkg`
 
 0.1.0 / 2015-06-01
 ------------------
