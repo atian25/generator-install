@@ -1,3 +1,8 @@
+0.3.0 / 2015-06-01
+------------------
+- default to list npm packages
+- add keyword filter
+
 0.2.0 / 2015-06-01
 ------------------
 - rename to `generator-install`

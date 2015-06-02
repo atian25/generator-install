@@ -9,8 +9,10 @@ A generator to install remote generator
 
 ```
   npm install -g generator-install
+  
   yo install 
   yo install [pkg]
+  yo install --keyword=angular
   yo install --tmpDir=./ --cfg=path/to/file
 ```
 
@@ -34,6 +36,8 @@ support first argument to be `pkg`, skip prompting
   - {String} JSON string of config object, given by cli args
   - {String} remote url of config file, such as a github raw url
   - {String} local path of config file
+  
+- keyword : filter generator
 
 - pkg : install target
   - will use as `npm install pkg`
@@ -43,6 +47,8 @@ support first argument to be `pkg`, skip prompting
 - clean : Where to clean generator cache, default to false
 
 - tmpDir : Where to npm install generator, default to `os.tmpDir()`
+
+- buildin : true to use config.json of this repository , default (false) to query npm using keyword 'yeoman-generator'
 
 ### Config.json
 

@@ -8,49 +8,90 @@ var npmi = require('npmi');
 
 module.exports = yeoman.generators.Base.extend({
   constructor: function (args, options) {
-    //cfg support object / json string / remote url / local url
-    options['cfg'] = options['cfg'] || 'https://raw.githubusercontent.com/atian25/generator-install/master/config.json';
+    var CONFIG_URL_REMOTE = 'https://yeoman-generator-list.herokuapp.com/';
+    var CONFIG_URL_BUILDIN = 'https://raw.githubusercontent.com/atian25/generator-install/master/config.json';
+    var pkgInfo = require('../package.json');
 
     //support first argument to be package, skip prompting
     options['pkg'] = options['pkg'] || args[0];
-    options['name'] = options['name'] || options['pkg'];
 
     //where to npm install generator
     options['tmpDir'] = normalize(options['tmpDir'] || require('os').tmpDir());
 
     yeoman.Base.apply(this, arguments);
+
+    this.description = pkgInfo.description;
+    this.option('cfg', {
+      desc: 'config file url, support object / json string / remote url / local url',
+      defaults: options.hasOwnProperty('buildin') ? CONFIG_URL_BUILDIN : CONFIG_URL_REMOTE
+    });
+
+    this.option('keyword', {
+      desc: 'keyword to filter generators'
+    });
+
+    this.option('buildin', {
+      desc: 'use buildin config remote url'
+    });
+
+    this.argument('pkg', {
+      required: false,
+      optional: true,
+      desc: 'npm install package target'
+    });
   },
 
   initializing: function () {
-    var self = this;
-    var done = this.async();
+    //if provide pkg, skip read cfg
+    if (!this.options.pkg) {
+      var done = this.async();
+      var options = this.options;
 
-    //read config by options.cfg param
-    readConfig.call(this, this.options.cfg, function (err, results) {
-      if (err) {
-        console.error('Read Config got error: ', err);
-      } else if(!Array.isArray(results)){
-        console.error('Config should be array', results);
-      }else {
-        self.options.generators = results;
-        done();
-      }
-    });
+      //read config by options.cfg param
+      readConfig.call(this, options.cfg, function (err, results) {
+        if (err) {
+          console.error('Read Config got error: ', err);
+        } else if (!Array.isArray(results)) {
+          console.error('Config should be array', results);
+        } else {
+          //filter
+          options.generators = results.filter(function (item) {
+            return !options['keyword'] || item.name.indexOf(options['keyword']) !== -1;
+          });
+          //sort
+          options.generators.sort(function (x, y) {
+            return y['stars'] - x['stars'];
+          });
+          //check length
+          if(!options.generators.length){
+            console.error('%s Not found any generator by keyword: %s, exit..', chalk.bold.yellow('>'), options['keyword']);
+            process.exit();
+          }
+          done();
+        }
+      });
+    }
   },
 
   prompting: {
     generator: function () {
-      if (!this.options.pkg) {
-        var self = this;
+      var self = this;
+      var options = this.options;
+
+      //if provide pkg, skip prompt
+      if (!options.pkg) {
         var done = this.async();
         //format user question
-        var choices = self.options.generators.map(function (item) {
-          var label = chalk.yellow(item['name']);
-          for (var key in item) {
-            if (['name'].indexOf(key) === -1 && item.hasOwnProperty(key)) {
+        var choices = options.generators.map(function (item) {
+          var label = chalk.yellow(item.name);
+          if (item.hasOwnProperty('stars')) {
+            label += ' (Stars: ' + item['stars'] + ')';
+          }
+          ['description', 'website'].forEach(function (key) {
+            if (item.hasOwnProperty(key)) {
               label += util.format('\r\n    - %s: %s', capitalizeFirstLetter(key), item[key]);
             }
-          }
+          });
           return {
             name: label,
             value: item
@@ -60,22 +101,23 @@ module.exports = yeoman.generators.Base.extend({
         self.prompt({
           name: 'generator',
           type: 'list',
-          message: 'Choose generator',
+          message: 'Choose generator(Total ' + choices.length + ') ',
           choices: choices
         }, function (results) {
           var target = results['generator'];
           //self.options.generator = target;
-          self.options.name = target.name;
-          self.options.pkg = target.pkg || target.name;
+          options.name = target.name;
+          options.pkg = target.pkg || target.name;
           done();
         });
+      } else {
+        options.name = options.name || options.pkg;
       }
     }
   },
 
   writing: {
     install: function () {
-      //TODO: 支持version, 支持安装github路径
       var self = this;
       var done = this.async();
       var options = self.options;
@@ -140,6 +182,7 @@ function readConfig(cfg, cb) {
     case 'string':
       if (/^http/.test(cfg)) {
         //remote url, request it.
+        this.log('%s fetch generators from %s, please wait...', chalk.bold.yellow('>'), cfg);
         request.get({url: cfg, json: true}, function (err, response, body) {
           if (err) {
             cb(err);
