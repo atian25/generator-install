@@ -9,7 +9,7 @@ var npmi = require('npmi');
 module.exports = yeoman.generators.Base.extend({
   constructor: function (args, options) {
     var CONFIG_URL_REMOTE = 'https://yeoman-generator-list.herokuapp.com/';
-    var CONFIG_URL_BUILDIN = 'https://raw.githubusercontent.com/atian25/generator-install/master/config.json';
+    var CONFIG_URL_BUILDIN = 'https://raw.githubusercontent.com/atian25/generator-install/master/config.json?' + new Date().getTime();
     var pkgInfo = require('../package.json');
 
     //support first argument to be package, skip prompting
