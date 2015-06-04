@@ -4,6 +4,12 @@
     "description": "Generate a Yeoman generator",
     "website": "https://github.com/yeoman/generator-generator"
   }, {
+    "name": "generator-scrat-pagelet-koa",
+    "package": "generator-scrat-pagelet-koa",
+    "description": "Generator for scrat project, pagelet mode && koa base",
+    "author": "TZ <atian25@qq.com>",
+    "website": "https://github.com/scrat-team/generator-scrat-pagelet-koa"
+  }, {
     "name": "generator-ngfis",
     "description": "ngfis generator",
     "author": "TZ <atian25@qq.com>",
